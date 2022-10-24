@@ -1,4 +1,26 @@
-from django.http import HttpResponse
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializer import PostSerializer
+from base.models import Post
 
-def home_api(request):
-    return httpResponse("this is home API")
+@api_view(['GET'])
+def getRoutes(request):
+    routes = {
+        'users':'/api/users',
+        'posts':'/api/posts',
+
+    }
+    return Response(routes)
+
+@api_view(['GET'])
+def getPosts(request):
+    posts = Post.objects.all()
+    serializer = PostSerializer(posts,many=True)
+
+
+
+    return Response(serializer.data)
+
+
+
+    
