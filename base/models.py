@@ -1,4 +1,5 @@
 
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -7,25 +8,41 @@ class Company(models.Model):
     # user = models.ForeignKey(User,on_delete = models.CASCADE)
     name = models.CharField(max_length = 200,null=True,blank =True)
     website = models.CharField(max_length=200,null=True,blank =True)
-    boi = models.TextField(null=True,blank =True)
-    # linkedin = 
-    # twitter = 
-    # logo = 
+    bio = models.TextField(null=True,blank =True)
+    logo = models.ImageField(default='',upload_to = '',null=True,blank =True)
+    linkedin = models.CharField(max_length=1000,null=True,blank =True)
+    twitter = models.CharField(max_length=1000,null=True,blank =True)
 
     def __str__(self):
         return str(self.name)
+
+
+class JobOpening(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
+    company = models.ForeignKey(Company,on_delete = models.CASCADE,null=True,blank=True)
+    available = models.BooleanField(default='True')
+    title = models.CharField(max_length=1000,null=True,blank =True)
+    description = models.TextField(null=True,blank =True)
+    created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.title) + "--" + str(self.company.name)
+    
+    ordering = '-created'
+
 
 
 class Social(models.Model):
     icon = models.ImageField(default = '',upload_to = '', blank=True, null=True)
     link = models.CharField(max_length = 200, blank=True, null=True)
 
-
+# null --> database
+# blank --> frontend
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
     avatar = models.ImageField(default = '',upload_to = '', blank=True, null=True)
     name = models.CharField(max_length = 200,null=True,blank=True,default='TEST' )
-    socials = models.ManyToManyField('Social',blank=True)
+    socials = models.ManyToManyField('Social',blank=True,null=True)
     skills = models.ManyToManyField('Skill',blank=True)
     verified = models.BooleanField(default = False)
     
