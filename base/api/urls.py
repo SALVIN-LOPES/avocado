@@ -3,9 +3,11 @@ from django.urls import path,include
 
 urlpatterns = [
     path('',views.getRoutes,name = 'getRoutes'),
-    path('post/<str:pk>/',views.getPost,name='getPost'),
+    path('posts/add/',views.addPost,name='addPost'),
+    path('posts/<str:pk>/',views.getPost,name='getPost'),
+    path('posts/<str:pk>/update/',views.updatePost,name='updatePost'),
+    path('posts/<str:pk>/delete/',views.deletePost,name='deletePost'),
     path('posts/',views.getPosts,name='getPosts'),
-    path('addPost/',views.addPost,name='addPost'),
 
     path('users/',views.getUsers,name='getUsers'),
     path('users/recommended/',views.getRecommendedUsers,name='getRecommendedUsers'),
