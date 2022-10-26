@@ -9,7 +9,7 @@ class Company(models.Model):
     name = models.CharField(max_length = 200,null=True,blank =True)
     website = models.CharField(max_length=200,null=True,blank =True)
     bio = models.TextField(null=True,blank =True)
-    logo = models.ImageField(default='',upload_to = '',null=True,blank =True)
+    logo = models.ImageField(default='',upload_to = 'logos',null=True,blank =True)
     linkedin = models.CharField(max_length=1000,null=True,blank =True)
     twitter = models.CharField(max_length=1000,null=True,blank =True)
 
@@ -42,7 +42,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,null=True,blank=True)
     avatar = models.ImageField(default = '',upload_to = '', blank=True, null=True)
     name = models.CharField(max_length = 200,null=True,blank=True,default='TEST' )
-    socials = models.ManyToManyField('Social',blank=True,null=True)
+    socials = models.ManyToManyField('Social',blank=True)
     skills = models.ManyToManyField('Skill',blank=True)
     verified = models.BooleanField(default = False)
     
